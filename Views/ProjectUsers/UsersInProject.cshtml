@@ -1,0 +1,54 @@
+﻿@model Splatter.Models.ProjectUsersViewModel
+
+@{
+    ViewBag.Title = "UsersInProject";
+}
+
+
+@if (Model.ProjectName == "Unassigned")
+        {
+            <h2>Users Not On Project</h2>;
+        }
+        else
+        {
+            <h2>Users On Project</h2>;
+        }
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.HiddenFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectUsers, "Users", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               @Html.ListBoxFor(model => model.SelectedUsers, Model.ProjectUsers as MultiSelectList, new { htmlAttributes = new { @class = "form-control" } })
+               @Html.ValidationMessageFor(model => model.ProjectUsers, "", new { @class = "text-danger" })
+            </div>
+        </div>
+  
+        @if (Model.ProjectName != "Unassigned")
+        {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Remove User(s)" class="btn btn-danger" />
+            </div>
+        </div>
+        }
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Projects")
+</div>

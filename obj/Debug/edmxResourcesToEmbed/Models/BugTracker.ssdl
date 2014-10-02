@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BugTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BTUsers">
+    <Key>
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DisplayName" Type="nchar" MaxLength="100" Nullable="false" />
+    <Property Name="AspNetUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProjectUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TicketAttachments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketId" Type="int" Nullable="false" />
+    <Property Name="FilePath" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FileUrl" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketComments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketId" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketHistories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketId" Type="int" Nullable="false" />
+    <Property Name="Property" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OldValue" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NewValue" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Changed" Type="datetimeoffset" Precision="7" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketNotifications">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketId" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketPriorities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tickets">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
+    <Property Name="Updated" Type="datetimeoffset" Precision="7" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="TicketTypeId" Type="int" Nullable="false" />
+    <Property Name="TicketPriorityId" Type="int" Nullable="false" />
+    <Property Name="TicketStatusId" Type="int" Nullable="false" />
+    <Property Name="OwnerUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AssignedToUserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketStatuses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TicketTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_ProjectUsers_Projects">
+    <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+    <End Role="ProjectUsers" Type="Self.ProjectUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectUsers">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectUsers_Users">
+    <End Role="BTUsers" Type="Self.BTUsers" Multiplicity="0..1" />
+    <End Role="ProjectUsers" Type="Self.ProjectUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BTUsers">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="ProjectUsers">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketAttachments_Tickets">
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+    <End Role="TicketAttachments" Type="Self.TicketAttachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TicketAttachments">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketAttachments_Users">
+    <End Role="BTUsers" Type="Self.BTUsers" Multiplicity="1" />
+    <End Role="TicketAttachments" Type="Self.TicketAttachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BTUsers">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="TicketAttachments">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketComments_Tickets">
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+    <End Role="TicketComments" Type="Self.TicketComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TicketComments">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketComments_Users">
+    <End Role="BTUsers" Type="Self.BTUsers" Multiplicity="1" />
+    <End Role="TicketComments" Type="Self.TicketComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BTUsers">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="TicketComments">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketHistories_Tickets">
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+    <End Role="TicketHistories" Type="Self.TicketHistories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TicketHistories">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketHistories_Users">
+    <End Role="BTUsers" Type="Self.BTUsers" Multiplicity="1" />
+    <End Role="TicketHistories" Type="Self.TicketHistories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BTUsers">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="TicketHistories">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketNotifications_Tickets">
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+    <End Role="TicketNotifications" Type="Self.TicketNotifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TicketNotifications">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TicketNotifications_Users">
+    <End Role="BTUsers" Type="Self.BTUsers" Multiplicity="1" />
+    <End Role="TicketNotifications" Type="Self.TicketNotifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BTUsers">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="TicketNotifications">
+        <PropertyRef Name="UserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Projects">
+    <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_TicketPriorities">
+    <End Role="TicketPriorities" Type="Self.TicketPriorities" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TicketPriorities">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="TicketPriorityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_TicketStatuses">
+    <End Role="TicketStatuses" Type="Self.TicketStatuses" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TicketStatuses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="TicketStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_TicketTypes">
+    <End Role="TicketTypes" Type="Self.TicketTypes" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TicketTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="TicketTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Users">
+    <End Role="BTUsers" Type="Self.BTUsers" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BTUsers">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="AssignedToUserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Users1">
+    <End Role="BTUsers" Type="Self.BTUsers" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BTUsers">
+        <PropertyRef Name="UserName" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="OwnerUserName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BugTrackerModelStoreContainer">
+    <EntitySet Name="BTUsers" EntityType="Self.BTUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectUsers" EntityType="Self.ProjectUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketAttachments" EntityType="Self.TicketAttachments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketComments" EntityType="Self.TicketComments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketHistories" EntityType="Self.TicketHistories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketNotifications" EntityType="Self.TicketNotifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketPriorities" EntityType="Self.TicketPriorities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketStatuses" EntityType="Self.TicketStatuses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketTypes" EntityType="Self.TicketTypes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ProjectUsers_Projects" Association="Self.FK_ProjectUsers_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="ProjectUsers" EntitySet="ProjectUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectUsers_Users" Association="Self.FK_ProjectUsers_Users">
+      <End Role="BTUsers" EntitySet="BTUsers" />
+      <End Role="ProjectUsers" EntitySet="ProjectUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketAttachments_Tickets" Association="Self.FK_TicketAttachments_Tickets">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketAttachments" EntitySet="TicketAttachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketAttachments_Users" Association="Self.FK_TicketAttachments_Users">
+      <End Role="BTUsers" EntitySet="BTUsers" />
+      <End Role="TicketAttachments" EntitySet="TicketAttachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketComments_Tickets" Association="Self.FK_TicketComments_Tickets">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketComments" EntitySet="TicketComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketComments_Users" Association="Self.FK_TicketComments_Users">
+      <End Role="BTUsers" EntitySet="BTUsers" />
+      <End Role="TicketComments" EntitySet="TicketComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketHistories_Tickets" Association="Self.FK_TicketHistories_Tickets">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketHistories" EntitySet="TicketHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketHistories_Users" Association="Self.FK_TicketHistories_Users">
+      <End Role="BTUsers" EntitySet="BTUsers" />
+      <End Role="TicketHistories" EntitySet="TicketHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketNotifications_Tickets" Association="Self.FK_TicketNotifications_Tickets">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketNotifications" EntitySet="TicketNotifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TicketNotifications_Users" Association="Self.FK_TicketNotifications_Users">
+      <End Role="BTUsers" EntitySet="BTUsers" />
+      <End Role="TicketNotifications" EntitySet="TicketNotifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Projects" Association="Self.FK_Tickets_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_TicketPriorities" Association="Self.FK_Tickets_TicketPriorities">
+      <End Role="TicketPriorities" EntitySet="TicketPriorities" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_TicketStatuses" Association="Self.FK_Tickets_TicketStatuses">
+      <End Role="TicketStatuses" EntitySet="TicketStatuses" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_TicketTypes" Association="Self.FK_Tickets_TicketTypes">
+      <End Role="TicketTypes" EntitySet="TicketTypes" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Users" Association="Self.FK_Tickets_Users">
+      <End Role="BTUsers" EntitySet="BTUsers" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Users1" Association="Self.FK_Tickets_Users1">
+      <End Role="BTUsers" EntitySet="BTUsers" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

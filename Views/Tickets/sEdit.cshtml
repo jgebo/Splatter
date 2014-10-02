@@ -1,0 +1,209 @@
+﻿@model Splatter.Models.Ticket
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Ticket</h2>
+
+@Html.ActionLink("Back to List", "Index", new { projectid = ViewBag.pid })
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <form class="form-horizontal">
+        <hr />
+        <div class="col-md-4">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Title)
+            @Html.HiddenFor(model => model.Created)
+            @Html.HiddenFor(model => model.Updated)
+            @Html.HiddenFor(model => model.OwnerUserName)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProjectId, "Project", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TicketTypeId, "Ticket Type", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TicketTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TicketPriorityId, "Ticket Priority", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.DropDownList("TicketPriorityId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TicketPriorityId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TicketStatusId, "Ticket Status", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.DropDownList("TicketStatusId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TicketStatusId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.OwnerUserName, "Owner/User Name", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.DropDownList("OwnerUserName", null, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.OwnerUserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AssignedToUserName, "Assigned To User Name", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-offset-4">
+                    @Html.DropDownList("AssignedToUserName", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AssignedToUserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="padding-top:25px">
+                <div class="col-md-offset-0">
+                    <input type="submit" value="Save Changes" class="btn btn-primary col-md-offset-4" />
+                </div>
+            </div>
+            <div>
+                @Html.ActionLink("Back to List", "Index", new { projectid = ViewBag.pid })
+            </div>
+        </div>
+
+        @* add tables for ticket Comments, Attacments, History *@
+        <div class="col-md-7 col-md-offset-1">
+            <div class="form-group">
+                <h4>Ticket Comments</h4>
+                <table>
+                    <tr>
+                        <th class="col-md-4">
+                            Date Created
+                        </th>
+                        <th class="col-md-4">
+                            Created By
+                        </th>
+                        <th class="col-md-4">
+                            Teaser
+                        </th>
+                        <th class="col-md-4">
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.TicketComments)
+                    {
+                        <tr>
+                            <td class="col-md-4">
+                                @item.Created.LocalDateTime
+                            </td>
+                            <td class="col-md-4">
+                                @item.BTUser.DisplayName
+                            </td>
+                            <td class="col-md-4">
+                                @if (item.Comment.Length < 25)
+                                {
+                                    @item.Comment
+                                }
+                                else
+                                {
+                                    @item.Comment.Substring(0, 24)
+                                }
+                            </td>
+                            <td class="col-md-4">
+                                @*@Html.ActionLink("Details", "Details", "TicketComments", new { id = Model.Id, projectid = ViewBag.pid }, null)*@
+                                @Html.ActionLink("Details", "Details", "TicketComments", new { id = item.Id }, null)
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div>
+                    <br />
+                    @Html.ActionLink("Add Comment", "Create", "TicketComments", new { id = Model.Id }, null)
+                </div>
+                <hr />
+            </div>
+            <div class="form-group">
+                <h4>Ticket Attachments</h4>
+                <table>
+                    <tr>
+                        <th class="col-md-4">
+                            Created
+                        </th>
+                        <th class="col-md-4">
+                            Created By
+                        </th>
+                        <th class="col-md-4">
+                            FileName
+                        </th>
+                        <th class="col-md-4">
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.TicketAttachments)
+                    {
+                        <tr>
+                            <td class="col-md-4">
+                                @item.Created.LocalDateTime
+                            </td>
+                            <td class="col-md-4">
+                                @item.BTUser.DisplayName
+                            </td>
+                            <td class="col-md-4">
+                                <a href="@Url.Content(item.FileUrl)" target=" _blank">@item.FileUrl.Substring(6)</a>
+                            </td>
+                            <td class="col-md-4">
+                                @Html.ActionLink("Details", "Details", "TicketAttachments", new { id = item.Id, projectid = ViewBag.pid }, null)
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div>
+                    <br />
+                    @Html.ActionLink("Add Attachment", "Create", "TicketAttachments", new { id = Model.Id, projectid = ViewBag.pid }, null)
+                </div>
+                <hr /><br /><br /><br /><br /><br /><br /><br />
+            </div>
+    </form>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

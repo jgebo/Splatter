@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a4a677b5ba974b7784b3c94fa7712bb0" Name="Diagram1">
+        <EntityTypeShape EntityType="BugTrackerModel.BTUser" Width="1.5" PointX="0.75" PointY="10.5" />
+        <EntityTypeShape EntityType="BugTrackerModel.Project" Width="1.5" PointX="0.75" PointY="19.5" />
+        <EntityTypeShape EntityType="BugTrackerModel.ProjectUser" Width="1.5" PointX="6" PointY="11.125" />
+        <EntityTypeShape EntityType="BugTrackerModel.TicketAttachment" Width="1.5" PointX="3" PointY="6.75" />
+        <EntityTypeShape EntityType="BugTrackerModel.TicketComment" Width="1.5" PointX="6" PointY="8" />
+        <EntityTypeShape EntityType="BugTrackerModel.TicketHistory" Width="1.5" PointX="3" PointY="10.75" />
+        <EntityTypeShape EntityType="BugTrackerModel.TicketNotification" Width="1.5" PointX="6" PointY="14.125" />
+        <EntityTypeShape EntityType="BugTrackerModel.TicketPriority" Width="1.5" PointX="0.75" PointY="17.125" />
+        <EntityTypeShape EntityType="BugTrackerModel.Ticket" Width="1.5" PointX="3" PointY="14.625" />
+        <EntityTypeShape EntityType="BugTrackerModel.TicketStatus" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="BugTrackerModel.TicketType" Width="1.5" PointX="0.75" PointY="22" />
+        <AssociationConnector Association="BugTrackerModel.FK_ProjectUsers_Users" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketAttachments_Users" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketComments_Users" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketHistories_Users" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketNotifications_Users" />
+        <AssociationConnector Association="BugTrackerModel.FK_Tickets_Users" />
+        <AssociationConnector Association="BugTrackerModel.FK_Tickets_Users1" />
+        <AssociationConnector Association="BugTrackerModel.FK_ProjectUsers_Projects" />
+        <AssociationConnector Association="BugTrackerModel.FK_Tickets_Projects" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketAttachments_Tickets" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketComments_Tickets" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketHistories_Tickets" />
+        <AssociationConnector Association="BugTrackerModel.FK_TicketNotifications_Tickets" />
+        <AssociationConnector Association="BugTrackerModel.FK_Tickets_TicketPriorities" />
+        <AssociationConnector Association="BugTrackerModel.FK_Tickets_TicketStatuses" />
+        <AssociationConnector Association="BugTrackerModel.FK_Tickets_TicketTypes" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

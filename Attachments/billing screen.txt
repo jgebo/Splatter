@@ -1,0 +1,29 @@
+Shipping and Billing Info Screen
+
+order Number 99 for name
+
+Shipping information
+
+	Address    editable -boxes
+	City
+	State
+	Zip
+	Phone	
+Billing information
+<place same as shipping check box>
+	Address
+	City
+	State
+	Zip
+	Phone	
+Card Information
+	Name on Card
+	Card Number 
+	
+	Submit Order button   -go to new orders screen
+
+
+
+
+
+

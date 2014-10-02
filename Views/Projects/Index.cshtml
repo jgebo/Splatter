@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Splatter.Models.Project>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Current Projects</h2>
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>*@
+    
+<table class="table">
+    <tr>
+       <th colspan="1"></th>
+        </tr>
+        <tr style="background-color:gainsboro">
+            @foreach (var col in new[] { "Project" })
+            {
+                <th>
+                    @Html.ActionLink(col, "Sort", new { property = col })
+                </th>
+            }
+            <th></th>
+        </tr>
+        <tr>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                @if (User.IsInRole("Administrator"))
+                {
+                    if (item.Name == "Unassigned")
+                        {
+                         <td>
+                             @Html.ActionLink("Assign Users", "AssignUsers", "ProjectUsers", new { id = item.Id, pName = item.Name }, null) |
+                             @Html.ActionLink("View / Unassign Users", "UsersInProject", "ProjectUsers", new { id = item.Id, pName = item.Name }, null)
+                         </td>
+                        }
+                        else
+                    {
+                        <td>
+                            @Html.ActionLink("Assign Users", "AssignUsers", "ProjectUsers", new { id = item.Id, pName = item.Name }, null) |
+                            @Html.ActionLink("View / Unassign Users", "UsersInProject", "ProjectUsers", new { id = item.Id, pName = item.Name }, null) |
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.Id }) |*@
+                            @Html.ActionLink("View project tickets", "Index", "Tickets", new { projectid = item.Id, property = "Title" }, null)
+
+                        </td>
+                    }
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("View project tickets", "Index", "Tickets", new { projectid = item.Id, property = "Title" }, null)
+                    </td>
+                }
+
+            </tr>
+            }
+
+        </table>

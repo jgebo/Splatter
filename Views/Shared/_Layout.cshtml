@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - BugTracker By Spatter</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("BugTracker Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Administrator"))
+                        {
+                            // Show admin menus
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Administrator Menu
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Users", "Index", "BTUsers")</li>
+                                    <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
+                                    @*<li>@Html.ActionLink("Manage Project Users", "Index", "ProjectUsers")</li> //accessed through Projects *@
+                                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                                    <li>@Html.ActionLink("Tickets(all)", "Index", "Tickets", new { id = -1 }, null)</li>
+                                    <li>@Html.ActionLink("Ticket Priorities", "Index", "TicketPriorities")</li>
+                                    <li>@Html.ActionLink("Ticket Statuses", "Index", "TicketStatus")</li>
+                                    <li>@Html.ActionLink("Ticket Types", "Index", "TicketTypes")</li>
+                                    @*<li>@Html.ActionLink("View Ticket Attachmments", "Index", "TicketAttachments")</li>
+                                    <li>@Html.ActionLink("View Ticket Comments", "Index", "TicketComments")</li>*@
+                                    @*<li>@Html.ActionLink("View Ticket Histories", "Details", "TicketHistories")</li>*@
+                                    @*<li>@Html.ActionLink("Manage User Roles", "Index", "UserRoles")</li> //accessed through Roles *@
+                                </ul>
+                            </li>
+                        }
+                        else
+                            if (User.IsInRole("Project Manager"))
+                            {
+                                // Show admin menus
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        PM Menu
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Manage Users", "Index", "BTUsers")</li>
+                                        <li>@Html.ActionLink("Manage Projects", "Index", "Projects")</li>
+                                        <li>@Html.ActionLink("View Tickets", "Index", "Tickets", new { id = -1 }, null)</li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                                if (User.IsInRole("Developer"))
+                                {
+                                    // Show admin menus
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Developer Menu
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Work Projects", "Index", "Projects")</li>
+                                    <li>@Html.ActionLink("Work Tickets", "Index", "Tickets")</li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                            // All others
+                            //if (User.IsInRole("Submitter") || User.IsInRole("User"))
+                            if (User.IsInRole("Submitter"))
+                        {
+                            // Show admin menus
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Tickets Menu
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Submit Ticket", "Create", "Tickets", new { id = -1 }, null)</li>
+                                    <li>@Html.ActionLink("Track Tickets", "Index", "Tickets", new { id = -1 }, null)</li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                    
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    @*<div class="container body-content">*@
+    <div class="wrapper primary">
+    <div class="container boxed">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - BugTracker By Spatter</p>
+        </footer>
+    </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
